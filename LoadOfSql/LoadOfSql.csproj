@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E4670D21-C3C6-48C7-BB47-0B5A6DD1C337}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LoadOfSql</RootNamespace>
+    <AssemblyName>LoadOfSql</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>C:\Users\stereoappa\Desktop\JournalDeploy\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>false</MapFileExtensions>
+    <InstallUrl>http://85.159.227.104:8081/</InstallUrl>
+    <ProductName>Журнал выданной информации ИОГД</ProductName>
+    <PublisherName>Программы ИОГД</PublisherName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationVersion>1.4.1.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\document-properties_3728.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>9A0A461E2FD15D847F4363B0A859DC73D02C16D5</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>LoadOfSql_1_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.6.0\lib\net40\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\Microsoft.Office.Interop.Word.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Unity.Abstractions, Version=3.2.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.6.0\lib\net40\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.6.0.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.6.0\lib\net40\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Interception, Version=5.4.0.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.6.0\lib\net40\Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ServiceLocation, Version=2.1.0.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.6.0\lib\net40\Unity.ServiceLocation.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Forms\AboutBox1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutBox1.Designer.cs">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Enums.cs" />
+    <Compile Include="Domain\Document.cs" />
+    <Compile Include="Domain\DomainExtensions.cs" />
+    <Compile Include="Domain\ClientInfo.cs" />
+    <Compile Include="Domain\IdentityDocType.cs" />
+    <Compile Include="Domain\ScanLink.cs" />
+    <Compile Include="Forms\Form13ReportBids.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form13ReportBids.Designer.cs">
+      <DependentUpon>Form13ReportBids.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form14ReportBidsParams.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form14ReportBidsParams.Designer.cs">
+      <DependentUpon>Form14ReportBidsParams.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form15EmployeesAndSigns.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form15EmployeesAndSigns.Designer.cs">
+      <DependentUpon>Form15EmployeesAndSigns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\Controls\DataGridViewCalendarColumn.cs" />
+    <Compile Include="Forms\Form11RenameOrganization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form11RenameOrganization.Designer.cs">
+      <DependentUpon>Form11RenameOrganization.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form12AttachDocuments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form12AttachDocuments.Designer.cs">
+      <DependentUpon>Form12AttachDocuments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\Controls\ComboBoxTools.cs" />
+    <Compile Include="Infrastructure\Controls\DataGridViewExtensions.cs" />
+    <Compile Include="Infrastructure\Controls\LinkLabelTools.cs" />
+    <Compile Include="Infrastructure\Controls\MoveControl.cs" />
+    <Compile Include="Infrastructure\Controls\ToolStripStatusLabelExtensions.cs" />
+    <Compile Include="Infrastructure\DAL\BlankRowsManager.cs" />
+    <Compile Include="Infrastructure\DAL\DataManager.cs" />
+    <Compile Include="Infrastructure\Controls\TextBoxTools.cs" />
+    <Compile Include="Domain\CostFillingModel.cs" />
+    <Compile Include="Domain\SummingType.cs" />
+    <Compile Include="Forms\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form10GotProfit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form10GotProfit.Designer.cs">
+      <DependentUpon>Form10GotProfit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form2.Designer.cs">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form3Editing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form3Editing.Designer.cs">
+      <DependentUpon>Form3Editing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form4NewOrgOrClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form4NewOrgOrClient.Designer.cs">
+      <DependentUpon>Form4NewOrgOrClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form5SQLQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form5SQLQuery.Designer.cs">
+      <DependentUpon>Form5SQLQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form6Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form6Settings.Designer.cs">
+      <DependentUpon>Form6Settings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form7UserLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form7UserLogin.Designer.cs">
+      <DependentUpon>Form7UserLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form8GetMapCases.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form8GetMapCases.Designer.cs">
+      <DependentUpon>Form8GetMapCases.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form9AddSubMapCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form9AddSubMapCount.Designer.cs">
+      <DependentUpon>Form9AddSubMapCount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalSettings.cs" />
+    <Compile Include="Infrastructure\DAL\MapCasesManager.cs" />
+    <Compile Include="Infrastructure\PrintingManager.cs" />
+    <Compile Include="Infrastructure\SqlQueryBuilder.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RowEdit.cs" />
+    <Compile Include="Infrastructure\RegexAnalys.cs" />
+    <EmbeddedResource Include="Forms\AboutBox1.resx">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form10GotProfit.resx">
+      <DependentUpon>Form10GotProfit.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form11RenameOrganization.resx">
+      <DependentUpon>Form11RenameOrganization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form12AttachDocuments.resx">
+      <DependentUpon>Form12AttachDocuments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form13ReportBids.resx">
+      <DependentUpon>Form13ReportBids.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form14ReportBidsParams.resx">
+      <DependentUpon>Form14ReportBidsParams.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form15EmployeesAndSigns.resx">
+      <DependentUpon>Form15EmployeesAndSigns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form2.resx">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form3Editing.resx">
+      <DependentUpon>Form3Editing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form4NewOrgOrClient.resx">
+      <DependentUpon>Form4NewOrgOrClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form5SQLQuery.resx">
+      <DependentUpon>Form5SQLQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form6Settings.resx">
+      <DependentUpon>Form6Settings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form7UserLogin.resx">
+      <DependentUpon>Form7UserLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form8GetMapCases.resx">
+      <DependentUpon>Form8GetMapCases.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form9AddSubMapCount.resx">
+      <DependentUpon>Form9AddSubMapCount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="LoadOfSql_1_TemporaryKey.pfx" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Resources\Attenshion.png" />
+    <None Include="Resources\edit_add_3186.png" />
+    <None Include="Resources\add_1353.png" />
+    <None Include="Resources\kedit_3845.png" />
+    <None Include="Resources\edit_9968.png" />
+    <Content Include="Шаблон формы выдачи информации.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\document-properties_3728.ico" />
+    <None Include="Resources\save.png" />
+    <None Include="Resources\pencil.png" />
+    <None Include="Resources\image %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ApplicationJournal\ApplicationJournal.csproj">
+      <Project>{36c94f9d-bc55-4ea5-9d86-db0ee6ffd554}</Project>
+      <Name>ApplicationJournal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DomainModel\DomainModel.csproj">
+      <Project>{cff072fc-3ff6-4969-b2c0-97bd1e738ada}</Project>
+      <Name>DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.Data.EF\Infrastructure.Data.EF.csproj">
+      <Project>{3940490d-c7fa-478d-b839-269bbb6b5825}</Project>
+      <Name>Infrastructure.Data.EF</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
