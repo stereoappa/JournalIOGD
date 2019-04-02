@@ -604,7 +604,10 @@ namespace LoadOfSql
             catch (Exception exc) { MessageBox.Show("Форма не смогла создать документы, возможно были введены некорректные данные" + exc.Message, "Критическая ошибка", MessageBoxButtons.OK, MessageBoxIcon.Stop); }
         }
 
-
+        private void Form3Editing_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            dm.Dispose();
+        }
     }
 }
 

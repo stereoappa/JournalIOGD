@@ -121,6 +121,7 @@ namespace LoadOfSql
             this.MinimumSize = new System.Drawing.Size(665, 438);
             this.Name = "Form13ReportBids";
             this.Text = "Книга учета: Заявки";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form13ReportBids_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvReport)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

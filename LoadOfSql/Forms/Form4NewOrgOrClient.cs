@@ -257,5 +257,10 @@ namespace LoadOfSql
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
+
+        private void Form4NewOrgOrClient_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            dm.Dispose();
+        }
     }
 }

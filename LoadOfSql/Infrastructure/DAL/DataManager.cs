@@ -34,7 +34,7 @@ namespace LoadOfSql.Infrastructure.DAL
                 DBConnection = null;
             }
         }
-        public int GetClientId(string clientName, int orgId) 
+        public int GetClientId(string clientName, int orgId)
         {
             if (clientName == null || clientName == "")
                 throw new Exception("Переданно некорректное ФИО Клиента");
@@ -242,7 +242,7 @@ namespace LoadOfSql.Infrastructure.DAL
         {
             if (clInfo.Id == null)
                 return false;
-            
+
             //не null только тогда, когда пользователь выбрал новый файл со своего компьютера
             if (clInfo.LocalScanLink != null)
             {
@@ -292,9 +292,10 @@ namespace LoadOfSql.Infrastructure.DAL
 
                 return table;
             }
-            catch (SqlException)
+            catch (Exception ex)
             {
-                MessageBox.Show("Ошибка обращения к базе данных.", "Системный сбой", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ошибка обращения к базе данных.\n" + ex.Message + ". Метод: \n" +
+                    System.Reflection.MethodBase.GetCurrentMethod().Name, "Системный сбой", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }

@@ -43,6 +43,7 @@ namespace LoadOfSql
                 }
 
                 callback(DialogResult.OK);
+                dbManager.Dispose();
                 Close();
             }           
         }

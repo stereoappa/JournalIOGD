@@ -240,7 +240,7 @@ namespace LoadOfSql
                 {
                     PrintingManager.Print(lastID,
                                           Convert.ToDateTime(textBox3.Text),
-                                          docsForInsert,
+                                          docsForInsert ?? new List<Document> (),
                                           organizationsCB.Text,
                                           dm.GetClientName(Convert.ToInt32(clientsCB.SelectedValue)),
                                           clientsCB.Text,
@@ -249,7 +249,7 @@ namespace LoadOfSql
                                           GetInfoType(),                                          
                                           employCB.Text,
                                           _employeeService.GetActiveSign(),
-                                          typeDocCB.Text);
+                                          entryType: typeDocCB.Text);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
@@ -607,5 +607,9 @@ namespace LoadOfSql
         }
         #endregion
 
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            dm.Dispose();
+        }
     }
 }

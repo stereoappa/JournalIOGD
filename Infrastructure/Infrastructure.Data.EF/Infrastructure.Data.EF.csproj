@@ -52,6 +52,7 @@
     <Compile Include="Repositories\RecordRepository.cs" />
     <Compile Include="Repositories\SignRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\TemplateRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

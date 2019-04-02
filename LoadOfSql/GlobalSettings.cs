@@ -10,7 +10,11 @@ namespace LoadOfSql
 {
     static class GlobalSettings
     {
+#if DEBUG
+        public static string ConnectionString => System.Configuration.ConfigurationManager.ConnectionStrings["JournalDBdev"].ConnectionString;
+#else
         public static string ConnectionString => System.Configuration.ConfigurationManager.ConnectionStrings["JournalDB"].ConnectionString;
+#endif
         public static Employee LoginUser { get; set; }
         public static string ScanDirectory { get; internal set; }
         public static string LastUserDirectory { get; internal set; }

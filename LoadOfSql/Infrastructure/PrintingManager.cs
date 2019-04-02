@@ -48,7 +48,7 @@ namespace LoadOfSql.Infrastructure
             var r = wordDocument.Bookmarks[v].Range;
             Clipboard.SetDataObject(bitmap);
             r.Paste();
-            
+            Clipboard.Clear();
             //wordDocument.InlineShapes.AddPicture("D:\\Гончарова_sign.jpg", ref missing, ref saveWithDocument, ref r);
         }
 

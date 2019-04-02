@@ -363,6 +363,7 @@
             this.Name = "Form3Editing";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Редактирование записи";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form3Editing_FormClosing);
             this.Load += new System.EventHandler(this.Form3Editing_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

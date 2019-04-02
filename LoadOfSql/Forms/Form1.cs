@@ -17,6 +17,7 @@ using System.IO;
 using System.Threading.Tasks;
 using DomainModel.Entities;
 using LoadOfSql.Forms;
+using DomainModel.Repositories;
 
 namespace LoadOfSql
 {
@@ -53,12 +54,14 @@ namespace LoadOfSql
         bool sqlQueryIsFormed;
         IEmployeeService _employeeService;
         IUserService _userService;
+        ITemplateRepository _templateRepository;
 
-        public Form1(IUserService userService, IEmployeeService employeeService)
+        public Form1(IUserService userService, IEmployeeService employeeService, ITemplateRepository templateRepository)
         {
             InitializeComponent();
             _userService = userService;
             _employeeService = employeeService;
+            _templateRepository = templateRepository;
             //var records = _recordService.GetPageRecords();
 
             GlobalSettings.ReadRegistryKeys();
@@ -146,8 +149,21 @@ namespace LoadOfSql
                 AddToolStripSign(tsm);
                 //подписьНаДокументахToolStripMenuItem.DropDownItems.Add(tsm);
             }
-            подписьНаДокументахToolStripMenuItem.DropDownItems.Add(new ToolStripSeparator());
-            //    new ToolStripMenuItem("Добавить подпись..")});
+
+            //add below separator
+            MethodInvoker addSeparatorMethod = () => { подписьНаДокументахToolStripMenuItem.DropDownItems.Add(new ToolStripSeparator()); };
+            if (menuStrip1.InvokeRequired)
+            {
+                BeginInvoke(addSeparatorMethod);
+            }
+            else
+            {
+                addSeparatorMethod.Invoke();
+            }
+
+
+               // подписьНаДокументахToolStripMenuItem.DropDownItems.Add(new ToolStripSeparator());
+
         }
 
         void AddToolStripSign(ToolStripItem tsm)
@@ -536,6 +552,15 @@ namespace LoadOfSql
             emplForm.ShowDialog();
         }
 
+        private void загрузитьШаблонОВыдачеИнформацииToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.ShowDialog();
+
+            
+            //fileDialog.FileName
+        }
+
         private void авторизацияToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form7UserLogin f7 = new Form7UserLogin(_userService, em => GlobalSettings.LoginUser = em);
@@ -685,10 +710,10 @@ namespace LoadOfSql
 
 
 
+
         #endregion
 
-      
-
+       
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             dm.Dispose();

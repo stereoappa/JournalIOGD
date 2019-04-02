@@ -45,9 +45,10 @@ namespace LoadOfSql
                 dataAdapter.Fill(table);
                 bindingSource1.DataSource = table;
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Ошибка обращения к базе данных.", "Системный сбой", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ошибка обращения к базе данных.\n" + ex.Message + "\n" +
+                    System.Reflection.MethodBase.GetCurrentMethod().Name, "Системный сбой", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             foreach (DataGridViewColumn column in dataGridView1.Columns)
             {

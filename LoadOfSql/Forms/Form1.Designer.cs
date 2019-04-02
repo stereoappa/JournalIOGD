@@ -87,8 +87,11 @@
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.docsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.attensionInfoLabel = new System.Windows.Forms.Label();
+            this.загрузитьШаблондокументаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.загрузитьШаблонОВыдачеИнформацииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -191,7 +194,6 @@
             // данныеToolStripMenuItem
             // 
             this.данныеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.сотрудникиИПодписиToolStripMenuItem,
             this.toolStripSeparator2,
             this.добавитьОрганизациюToolStripMenuItem,
             this.переименоватьОрганизациюToolStripMenuItem,
@@ -199,6 +201,9 @@
             this.выданныеПланшетыToolStripMenuItem,
             this.полученнаяПрибыльToolStripMenuItem,
             this.toolStripSeparator4,
+            this.сотрудникиИПодписиToolStripMenuItem,
+            this.загрузитьШаблондокументаToolStripMenuItem,
+            this.toolStripSeparator8,
             this.отчетыToolStripMenuItem,
             this.toolStripSeparator3,
             this.обновитьToolStripMenuItem});
@@ -586,6 +591,21 @@
             this.attensionInfoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.attensionInfoLabel.Visible = false;
             // 
+            // загрузитьШаблондокументаToolStripMenuItem
+            // 
+            this.загрузитьШаблондокументаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.загрузитьШаблонОВыдачеИнформацииToolStripMenuItem});
+            this.загрузитьШаблондокументаToolStripMenuItem.Name = "загрузитьШаблондокументаToolStripMenuItem";
+            this.загрузитьШаблондокументаToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+            this.загрузитьШаблондокументаToolStripMenuItem.Text = "Загрузить шаблон документа..";
+            // 
+            // загрузитьШаблонОВыдачеИнформацииToolStripMenuItem
+            // 
+            this.загрузитьШаблонОВыдачеИнформацииToolStripMenuItem.Name = "загрузитьШаблонОВыдачеИнформацииToolStripMenuItem";
+            this.загрузитьШаблонОВыдачеИнформацииToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.загрузитьШаблонОВыдачеИнформацииToolStripMenuItem.Text = "\"О выдаче информации\"";
+            this.загрузитьШаблонОВыдачеИнформацииToolStripMenuItem.Click += new System.EventHandler(this.загрузитьШаблонОВыдачеИнформацииToolStripMenuItem_Click);
+            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.HeaderText = "Номер";
@@ -595,6 +615,11 @@
             // 
             this.dataGridViewTextBoxColumn2.HeaderText = "Дата";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(241, 6);
             // 
             // Form1
             // 
@@ -693,6 +718,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem сотрудникиИПодписиToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem загрузитьШаблондокументаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem загрузитьШаблонОВыдачеИнформацииToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
     }
 }
 

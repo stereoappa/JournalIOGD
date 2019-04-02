@@ -142,5 +142,10 @@ namespace LoadOfSql
         {
             bidParamForm.ShowDialog();
         }
+
+        private void Form13ReportBids_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            dm.Dispose();
+        }
     }
 }

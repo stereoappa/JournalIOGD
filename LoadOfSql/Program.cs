@@ -38,6 +38,7 @@ namespace LoadOfSql
             currentContainer.RegisterType<IEmployeeRepository, EmployeeRepository>(new HierarchicalLifetimeManager(), new InjectionConstructor(GlobalSettings.ConnectionString));
             currentContainer.RegisterType<IUserRepository, UserRepository>(new HierarchicalLifetimeManager(), new InjectionConstructor(GlobalSettings.ConnectionString));
             currentContainer.RegisterType<IRecordRepository, RecordRepository>(new HierarchicalLifetimeManager(), new InjectionConstructor(GlobalSettings.ConnectionString));
+            currentContainer.RegisterType<ITemplateRepository, TemplateRepository>(new HierarchicalLifetimeManager(), new InjectionConstructor(GlobalSettings.ConnectionString));
 
             return currentContainer;
         }

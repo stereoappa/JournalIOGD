@@ -220,6 +220,7 @@
             this.Name = "Form4NewOrgOrClient";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Добавить клиента или организацию";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form4NewOrgOrClient_FormClosing);
             this.Load += new System.EventHandler(this.Form4NewOrgOrClient_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
