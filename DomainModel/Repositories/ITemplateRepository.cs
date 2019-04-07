@@ -9,6 +9,7 @@ namespace DomainModel.Repositories
 {
     public interface ITemplateRepository : IRepository<TemplateFile>
     {
-        
+        List<TemplateType> GetTemplateTypes();
+        TemplateFile GetActualTemplate(TemplateTypeId type, bool withData);
     }
 }

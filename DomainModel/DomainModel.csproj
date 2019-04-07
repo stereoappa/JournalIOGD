@@ -42,9 +42,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\ClientInfo.cs" />
+    <Compile Include="Entities\Document.cs" />
+    <Compile Include="Entities\DomainExtensions.cs" />
+    <Compile Include="Entities\Enums.cs" />
+    <Compile Include="Entities\IdentityDocType.cs" />
     <Compile Include="Entities\Record.cs" />
+    <Compile Include="Entities\ScanLink.cs" />
     <Compile Include="Entities\Sign.cs" />
     <Compile Include="Entities\TemplateFile.cs" />
+    <Compile Include="Helpers\Md5Helper.cs" />
     <Compile Include="Repositories\IEmployeeRepository.cs" />
     <Compile Include="Repositories\IRecordRepository.cs" />
     <Compile Include="Repositories\ISignRepository.cs" />

@@ -1,18 +1,74 @@
-﻿using DomainModel.Entities;
+﻿using ApplicationJournal;
+using DomainModel.Entities;
+using DomainModel.Repositories;
 using LoadOfSql.Domain;
+using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
+using Document = DomainModel.Entities.Document;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace LoadOfSql.Infrastructure
 {
-    public static class PrintingManager
+    public interface IPrintingService
     {
-        static string templatePath = GlobalSettings.PrintTemplatePath;
-        static void FillingAllWordStub(Word.Document wordDocument, int id, DateTime date, List<Document> docs, string orgName,
+        string CreateEmptyTemplateFile(TemplateTypeId templateTypeId);
+
+        void Print(int id, DateTime date, List<Document> docs, string orgName,
+                                     string clientName, string identityClienName, string cost, string memo, string paymentStatus, string employee, Sign sign, string entryType = "");
+
+        void ExportToWord(int id, DateTime date, List<Document> docs, string orgName,
+                                     string clientName, string identityClientName, string cost, string memo, string paymentStatus, string employee, Sign sign, string entryType = "");
+    }
+
+
+    public class PrintingService : IPrintingService
+    {
+        ITemplateService _templateService;
+
+        public PrintingService(ITemplateService templateService)
+        {
+            _templateService = templateService;
+        }
+
+
+        public string CreateEmptyTemplateFile(TemplateTypeId templateTypeId)
+        {
+            if (!File.Exists(_templateService.IssueTemplatePath))
+            {
+                _templateService.LoadActualIssueTemplate();
+            }
+
+            var _tempFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "_Temp");
+            if (!Directory.Exists(_tempFolder))
+                Directory.CreateDirectory(_tempFolder);
+
+            var tempFilePath = Path.Combine(_tempFolder, _templateService.AvailableTemplates.First(t => t.TypeId == templateTypeId).Name + GetSaltForTemplate() + ".docx");
+
+            using (FileStream outputFile = new FileStream(tempFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+            {
+                using (FileStream srcFile = new FileStream(_templateService.IssueTemplatePath, FileMode.Open, FileAccess.ReadWrite))
+                {
+                    outputFile.SetLength(srcFile.Length);
+                    srcFile.CopyTo(outputFile, 1024);
+                }
+            }
+
+            return tempFilePath;
+        }
+
+        private string GetSaltForTemplate()
+        {
+            return DateTime.Now.ToString("HH_mm_ms_yyyy_MM_dd");
+        }
+
+        void FillingAllWordStub(Word.Document wordDocument, int id, DateTime date, List<Document> docs, string orgName,
                                      string clientName, string identityClientName, string cost, string memo, string paymentStatus, string employee, Sign sign, string entryType = "")
         {
             try
@@ -24,7 +80,7 @@ namespace LoadOfSql.Infrastructure
                 AddValueOfBookmark("orgName", orgName, wordDocument);
                 AddValueOfBookmark("clientName", identityClientName, wordDocument);
                 AddValueOfBookmark("clientName2", clientName, wordDocument);
-                AddValueOfBookmark("typeDoc", docs.Count > 0 ?  docs.GetDocsType().ToStringName() : entryType, wordDocument);
+                AddValueOfBookmark("typeDoc", docs.Count > 0 ? docs.GetDocsType().ToStringName() : entryType, wordDocument);
                 if (cost == "0" || cost == "бесплатно")
                     AddValueOfBookmark("cost", "бесплатно", wordDocument);
                 else
@@ -43,7 +99,7 @@ namespace LoadOfSql.Infrastructure
             }
         }
 
-        private static void AddImageOfBookmark(string v, Bitmap bitmap, Word.Document wordDocument)
+        private void AddImageOfBookmark(string v, Bitmap bitmap, Word.Document wordDocument)
         {
             var r = wordDocument.Bookmarks[v].Range;
             Clipboard.SetDataObject(bitmap);
@@ -52,26 +108,25 @@ namespace LoadOfSql.Infrastructure
             //wordDocument.InlineShapes.AddPicture("D:\\Гончарова_sign.jpg", ref missing, ref saveWithDocument, ref r);
         }
 
-        private static void AddValueOfBookmark(string bookmarkName, string value, Word.Document wordDocument)
+        private void AddValueOfBookmark(string bookmarkName, string value, Word.Document wordDocument)
         {
             if (wordDocument.Bookmarks.Exists(bookmarkName))
-               wordDocument.Bookmarks[bookmarkName].Range.Text = value;
+                wordDocument.Bookmarks[bookmarkName].Range.Text = value;
         }
 
-        public static void Print(int id, DateTime date, List<Document> docs, string orgName,
+        public void Print(int id, DateTime date, List<Document> docs, string orgName,
                                      string clientName, string identityClienName, string cost, string memo, string paymentStatus, string employee, Sign sign, string entryType = "")
         {
-            GlobalSettings.SetReadOnlyProp(templatePath);
+            //GlobalSettings.SetReadOnlyProp(_templateService.IssueTemplatePath);
 
             var wordApp = new Word.Application();
             wordApp.Visible = false;
 
             try
             {
-                var wordDocument = wordApp.Documents.Open(templatePath);               
+                var wordDocument = wordApp.Documents.Open(_templateService.IssueTemplatePath);
                 FillingAllWordStub(wordDocument, id, date, docs, orgName, clientName, identityClienName, cost, memo, paymentStatus, employee, sign, entryType);
-                GlobalSettings.Printers();
-                wordApp.ActivePrinter = GlobalSettings.printers[GlobalSettings.SelectPrinter];
+                wordApp.ActivePrinter = GlobalSettings.GetPrinters()[GlobalSettings.SelectPrinter];
                 wordApp.PrintOut(Background: true);
 
                 wordDocument.Close(Word.WdSaveOptions.wdDoNotSaveChanges);
@@ -88,26 +143,31 @@ namespace LoadOfSql.Infrastructure
         }
 
 
-        public static void ExportToWord(int id, DateTime date, List<Document> docs, string orgName,
+        public void ExportToWord(int id, DateTime date, List<Document> docs, string orgName,
                                      string clientName, string identityClientName, string cost, string memo, string paymentStatus, string employee, Sign sign, string entryType = "")
         {
-            GlobalSettings.SetReadOnlyProp(templatePath);
+            var tempWordFile = CreateEmptyTemplateFile(TemplateTypeId.InformationIssueTemplate);
+
             var wordApp = new Word.Application();
+            //GlobalSettings.SetReadOnlyProp(templatePath);
+
             wordApp.Visible = false;
             try
             {
-                var wordDocument = wordApp.Documents.Open(templatePath);
+                var wordDocument = wordApp.Documents.Open(tempWordFile);
                 FillingAllWordStub(wordDocument, id, date, docs, orgName, clientName, identityClientName, cost, memo, paymentStatus, employee, sign, entryType);
 
+                wordDocument.Save();
                 wordApp.Visible = true;
             }
-            catch
+            catch (Exception ex)
             {
                 wordApp.Quit();
-                throw new Exception("Не удалось отобразить запись в документ Word. Возможно, файл-шаблон не существует, либо поле Описания имеет слишком большой объем");
+                throw new Exception("Не удалось отобразить запись в документ Word. Возможно, файл-шаблон не существует, либо поле Описания имеет слишком большой объем\r\n\r\nПодробно:" + ex.Message);
             }
         }
-        static string GenerateRequisites(List<Document> docsForPrint)
+
+        string GenerateRequisites(List<Document> docsForPrint)
         {
             string result = "";
             if (docsForPrint != null)
@@ -129,7 +189,7 @@ namespace LoadOfSql.Infrastructure
                         var numRazresh = doc.NumRazresh == null ? "" : "№ " + doc.NumRazresh.Trim();
                         var dateRazresh = doc.DateRazresh == null ? "" : " от " + doc.DateRazresh.Value.ToShortDateString();
                         var ticketNum = doc.TicketNumber == null ? "" : " (обр. № " + doc.TicketNumber.Trim();
-                        var ticketDate = doc.TicketDate == null ? "" : " от " + doc.TicketDate.Value.ToShortDateString()+")";
+                        var ticketDate = doc.TicketDate == null ? "" : " от " + doc.TicketDate.Value.ToShortDateString() + ")";
 
                         result += numRazresh + dateRazresh + ticketNum + ticketDate + ";" + Environment.NewLine;
                     }
@@ -139,6 +199,8 @@ namespace LoadOfSql.Infrastructure
 
             return result; //.Replace("\r\n", "^p");
         }
+
+
         //static void ReplaceMemoStub(string memo, Word.Document wordDocument)
         //{
         //    string text;

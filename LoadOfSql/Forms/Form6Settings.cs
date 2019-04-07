@@ -19,8 +19,8 @@ namespace LoadOfSql
             textBox2.Text = GlobalSettings.ConnectionString;
             scanFolderTB.Text = GlobalSettings.ScanDirectory;
 
-            GlobalSettings.Printers();                               //загружаем список принтеров
-            comboBox1.Items.AddRange(GlobalSettings.printers);       //в комбобокс
+            GlobalSettings.GetPrinters();                               //загружаем список принтеров
+            comboBox1.Items.AddRange(GlobalSettings.GetPrinters());       //в комбобокс
             try
             {
                 comboBox1.SelectedIndex = GlobalSettings.SelectPrinter;  //из файла конфигурации берем индекс выбранного ранее принтера

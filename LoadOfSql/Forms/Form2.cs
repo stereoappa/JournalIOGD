@@ -12,6 +12,7 @@ using LoadOfSql.Infrastructure.DAL;
 using LoadOfSql.Infrastructure;
 using LoadOfSql.Infrastructure.Controls;
 using ApplicationJournal;
+using DomainModel.Entities;
 
 namespace LoadOfSql
 {
@@ -28,11 +29,13 @@ namespace LoadOfSql
         BindingSource bs = new BindingSource();
         BindingSource bsClient = new BindingSource();
         IEmployeeService _employeeService;
+        IPrintingService _printingService;
 
-        public Form2(FormResultCallback callback, IEmployeeService employeeService)
+        public Form2(FormResultCallback callback, IEmployeeService employeeService, IPrintingService printingService)
         {
             InitializeComponent();
             _employeeService = employeeService;
+            _printingService = printingService;
             this.callback = callback;
         }
 
@@ -238,7 +241,7 @@ namespace LoadOfSql
             {
                 try
                 {
-                    PrintingManager.Print(lastID,
+                    _printingService.Print(lastID,
                                           Convert.ToDateTime(textBox3.Text),
                                           docsForInsert ?? new List<Document> (),
                                           organizationsCB.Text,

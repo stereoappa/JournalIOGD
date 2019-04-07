@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DomainModel.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,15 +14,25 @@ namespace DomainModel.Entities
         public TemplateType TemplateType { get; set; }
         public Employee WhoUpload { get; set; }
 
-        public string GetActualHash()
+        public string CalculateHash()
         {
-            return null;
+            return Md5Helper.GetMd5Hash(FileData);
         }
     }
 
     public class TemplateType
     {
-        public int Id { get; set; }
+        public TemplateTypeId TypeId { get; set; }
         public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
+    }
+
+    public enum TemplateTypeId
+    {
+        InformationIssueTemplate = 1
     }
 }

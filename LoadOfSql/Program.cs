@@ -3,6 +3,7 @@ using ApplicationJournal;
 using DomainModel.Repositories;
 using DomainModel.Repositories.SuperTypes;
 using Infrastructure.Data.EF.Repositories;
+using LoadOfSql.Infrastructure;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
@@ -32,6 +33,9 @@ namespace LoadOfSql
             currentContainer.RegisterType<IEmployeeService, EmployeeService>();
             currentContainer.RegisterType<IRecordService, RecordService>();
             currentContainer.RegisterType<IUserService, UserService>();
+            currentContainer.RegisterType<ITemplateService, TemplateService>();
+            currentContainer.RegisterType<IPrintingService, PrintingService>();
+
 
             //repos
             currentContainer.RegisterType<ISignRepository, SignRepository>(new HierarchicalLifetimeManager(), new InjectionConstructor(GlobalSettings.ConnectionString));
@@ -39,6 +43,7 @@ namespace LoadOfSql
             currentContainer.RegisterType<IUserRepository, UserRepository>(new HierarchicalLifetimeManager(), new InjectionConstructor(GlobalSettings.ConnectionString));
             currentContainer.RegisterType<IRecordRepository, RecordRepository>(new HierarchicalLifetimeManager(), new InjectionConstructor(GlobalSettings.ConnectionString));
             currentContainer.RegisterType<ITemplateRepository, TemplateRepository>(new HierarchicalLifetimeManager(), new InjectionConstructor(GlobalSettings.ConnectionString));
+
 
             return currentContainer;
         }

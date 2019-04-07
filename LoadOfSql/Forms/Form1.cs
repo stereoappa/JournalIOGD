@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 using DomainModel.Entities;
 using LoadOfSql.Forms;
 using DomainModel.Repositories;
+using System.Diagnostics;
+using DomainModel.Helpers;
 
 namespace LoadOfSql
 {
@@ -54,19 +56,37 @@ namespace LoadOfSql
         bool sqlQueryIsFormed;
         IEmployeeService _employeeService;
         IUserService _userService;
+        ITemplateService _templateService;
         ITemplateRepository _templateRepository;
+        IPrintingService _printingService;
 
-        public Form1(IUserService userService, IEmployeeService employeeService, ITemplateRepository templateRepository)
+        public Form1(IUserService userService,
+            IEmployeeService employeeService,
+            ITemplateService templateService,
+            ITemplateRepository templateRepository,
+            IPrintingService printingService)
         {
             InitializeComponent();
+            SetVersionInHeader();
+
             _userService = userService;
             _employeeService = employeeService;
+            _templateService = templateService;
             _templateRepository = templateRepository;
+            _printingService = printingService;
             //var records = _recordService.GetPageRecords();
 
             GlobalSettings.ReadRegistryKeys();
             dm = new DataManager();
             sqlForm = new Form5SQLQuery(new FormResultCallback(sqlFormClosed), baseQuery);
+        }
+
+        private void SetVersionInHeader()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
+            Text += " " + version;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -81,7 +101,7 @@ namespace LoadOfSql
             if (GlobalSettings.LoginUser != null)
             {
                 this.toolStripStatusLabel1.ForeColor = System.Drawing.Color.Black;
-                toolStripStatusLabel1.Text = "Вход выполнен: " + GlobalSettings.LoginUser.ShortName;
+                toolStripStatusLabel1.Text = "Вход выполнен: " + (string.IsNullOrWhiteSpace(GlobalSettings.LoginUser.ShortName) ? GlobalSettings.LoginUser.SecondName : GlobalSettings.LoginUser.ShortName);
             }
             else
             {
@@ -123,6 +143,15 @@ namespace LoadOfSql
             #endregion
 
             GoLustNumber();
+            try
+            {
+                _templateService.LoadActualIssueTemplate();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошбика обновления шаблонов: {ex.Message}");
+            }
+
 
             dataGridView1.SortedOff();
         }
@@ -162,7 +191,7 @@ namespace LoadOfSql
             }
 
 
-               // подписьНаДокументахToolStripMenuItem.DropDownItems.Add(new ToolStripSeparator());
+            // подписьНаДокументахToolStripMenuItem.DropDownItems.Add(new ToolStripSeparator());
 
         }
 
@@ -247,7 +276,7 @@ namespace LoadOfSql
         {
             try
             {
-                Form2 addForm = new Form2(new FormResultCallback(FormClosedCallback), _employeeService);
+                Form2 addForm = new Form2(new FormResultCallback(FormClosedCallback), _employeeService, _printingService);
                 if (addForm.ShowDialog() == DialogResult.OK)
                     GoLustNumber();
             }
@@ -552,14 +581,12 @@ namespace LoadOfSql
             emplForm.ShowDialog();
         }
 
-        private void загрузитьШаблонОВыдачеИнформацииToolStripMenuItem_Click(object sender, EventArgs e)
+        private void редакторШаблоновToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.ShowDialog();
-
-            
-            //fileDialog.FileName
+            Form16Templates templatesForm = new Form16Templates(_templateRepository);
+            templatesForm.ShowDialog();
         }
+
 
         private void авторизацияToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -608,12 +635,11 @@ namespace LoadOfSql
         #endregion
 
         #region==========ВЫВЕСТИ В WORD И НА ПЕЧАТЬ===============
-
         private void ВдокументMSWordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                PrintingManager.ExportToWord(currentID,
+                _printingService.ExportToWord(currentID,
                                       Convert.ToDateTime(dataGridView1.CurrentRow.Cells[2].Value),
                                       GetDocsById(currentID),
                                       dataGridView1.CurrentRow.Cells[3].Value.ToString(),
@@ -636,7 +662,7 @@ namespace LoadOfSql
         {
             try
             {
-                PrintingManager.Print(currentID,
+                _printingService.Print(currentID,
                                 Convert.ToDateTime(dataGridView1.CurrentRow.Cells[2].Value),
                                 GetDocsById(currentID),
                                 dataGridView1.CurrentRow?.Cells[3].Value.ToString(),
@@ -662,22 +688,22 @@ namespace LoadOfSql
             form8nameSelect.ShowDialog();
         }
 
-        //ПЕРЕСЧЕТ ВСЕЙ ТАБЛИЦЫ через REGEXanalys
+        //ПЕРЕСЧЕТ ВСЕЙ ТАБЛИЦЫ через REGEXanalys. Tech
         private void button2_Click(object sender, EventArgs e)
         {
-            int cur_row_count;
-            foreach (DataGridViewRow dgrow in dataGridView1.Rows)
-            {
-                cur_row_count = RegexAnalys.MapCasesCount(dgrow.Cells[6].Value.ToString());
-                using (SqlConnection cn = new SqlConnection(GlobalSettings.ConnectionString))
-                {
-                    cn.Open();
-                    SqlCommand insertMapCases = cn.CreateCommand();
-                    insertMapCases.CommandText = @"UPDATE Журнал SET MapCasesCount = " + cur_row_count + " WHERE ID =" + (dgrow.Cells[0].Value);
-                    insertMapCases.ExecuteNonQuery();
-                    cn.Close();
-                }
-            }
+            //int cur_row_count;
+            //foreach (DataGridViewRow dgrow in dataGridView1.Rows)
+            //{
+            //    cur_row_count = RegexAnalys.MapCasesCount(dgrow.Cells[6].Value.ToString());
+            //    using (SqlConnection cn = new SqlConnection(GlobalSettings.ConnectionString))
+            //    {
+            //        cn.Open();
+            //        SqlCommand insertMapCases = cn.CreateCommand();
+            //        insertMapCases.CommandText = @"UPDATE Журнал SET MapCasesCount = " + cur_row_count + " WHERE ID =" + (dgrow.Cells[0].Value);
+            //        insertMapCases.ExecuteNonQuery();
+            //        cn.Close();
+            //    }
+            //}
         }
 
 
@@ -696,6 +722,15 @@ namespace LoadOfSql
             LoadTables(sqlForm.CurrentSqlQuery, docQuery);
             if (underRefreshPosDGV != -1)
                 dataGridView1.FirstDisplayedScrollingRowIndex = underRefreshPosDGV;
+
+            try
+            {
+                _templateService.LoadActualIssueTemplate();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошбика обновления шаблонов: {ex.Message}");
+            }
         }
 
         #region Attension Status
@@ -711,12 +746,31 @@ namespace LoadOfSql
 
 
 
+
         #endregion
 
-       
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             dm.Dispose();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //remove _Temp
+            var _tempFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "_Temp");
+
+            if (Directory.Exists(_tempFolder))
+            {
+                foreach (var file in Directory.GetFiles(_tempFolder))
+                {
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch { }
+                }
+
+            }
         }
     }
 }

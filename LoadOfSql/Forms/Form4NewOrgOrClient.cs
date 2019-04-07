@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Diagnostics;
 using System.Security.AccessControl;
+using DomainModel.Entities;
 
 namespace LoadOfSql
 {

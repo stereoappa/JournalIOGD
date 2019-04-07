@@ -42,14 +42,15 @@
             this.BtnCreateItem = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.данныеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.сотрудникиИПодписиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.добавитьОрганизациюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.переименоватьОрганизациюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.выданныеПланшетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.полученнаяПрибыльToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.загрузитьШаблондокументаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.сотрудникиИПодписиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.книгаУчетаЗаявкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -87,11 +88,8 @@
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.docsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.attensionInfoLabel = new System.Windows.Forms.Label();
-            this.загрузитьШаблондокументаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.загрузитьШаблонОВыдачеИнформацииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -194,15 +192,14 @@
             // данныеToolStripMenuItem
             // 
             this.данныеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSeparator2,
             this.добавитьОрганизациюToolStripMenuItem,
             this.переименоватьОрганизациюToolStripMenuItem,
             this.toolStripSeparator7,
             this.выданныеПланшетыToolStripMenuItem,
             this.полученнаяПрибыльToolStripMenuItem,
             this.toolStripSeparator4,
-            this.сотрудникиИПодписиToolStripMenuItem,
             this.загрузитьШаблондокументаToolStripMenuItem,
+            this.сотрудникиИПодписиToolStripMenuItem,
             this.toolStripSeparator8,
             this.отчетыToolStripMenuItem,
             this.toolStripSeparator3,
@@ -210,18 +207,6 @@
             this.данныеToolStripMenuItem.Name = "данныеToolStripMenuItem";
             this.данныеToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
             this.данныеToolStripMenuItem.Text = "Данные";
-            // 
-            // сотрудникиИПодписиToolStripMenuItem
-            // 
-            this.сотрудникиИПодписиToolStripMenuItem.Name = "сотрудникиИПодписиToolStripMenuItem";
-            this.сотрудникиИПодписиToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
-            this.сотрудникиИПодписиToolStripMenuItem.Text = "С&отрудники и подписи..";
-            this.сотрудникиИПодписиToolStripMenuItem.Click += new System.EventHandler(this.сотрудникиToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(241, 6);
             // 
             // добавитьОрганизациюToolStripMenuItem
             // 
@@ -260,6 +245,25 @@
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(241, 6);
+            // 
+            // загрузитьШаблондокументаToolStripMenuItem
+            // 
+            this.загрузитьШаблондокументаToolStripMenuItem.Name = "загрузитьШаблондокументаToolStripMenuItem";
+            this.загрузитьШаблондокументаToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+            this.загрузитьШаблондокументаToolStripMenuItem.Text = "Редактор шаблонов..";
+            this.загрузитьШаблондокументаToolStripMenuItem.Click += new System.EventHandler(this.редакторШаблоновToolStripMenuItem_Click);
+            // 
+            // сотрудникиИПодписиToolStripMenuItem
+            // 
+            this.сотрудникиИПодписиToolStripMenuItem.Name = "сотрудникиИПодписиToolStripMenuItem";
+            this.сотрудникиИПодписиToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+            this.сотрудникиИПодписиToolStripMenuItem.Text = "С&отрудники и подписи..";
+            this.сотрудникиИПодписиToolStripMenuItem.Click += new System.EventHandler(this.сотрудникиToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(241, 6);
             // 
             // отчетыToolStripMenuItem
             // 
@@ -591,21 +595,6 @@
             this.attensionInfoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.attensionInfoLabel.Visible = false;
             // 
-            // загрузитьШаблондокументаToolStripMenuItem
-            // 
-            this.загрузитьШаблондокументаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.загрузитьШаблонОВыдачеИнформацииToolStripMenuItem});
-            this.загрузитьШаблондокументаToolStripMenuItem.Name = "загрузитьШаблондокументаToolStripMenuItem";
-            this.загрузитьШаблондокументаToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
-            this.загрузитьШаблондокументаToolStripMenuItem.Text = "Загрузить шаблон документа..";
-            // 
-            // загрузитьШаблонОВыдачеИнформацииToolStripMenuItem
-            // 
-            this.загрузитьШаблонОВыдачеИнформацииToolStripMenuItem.Name = "загрузитьШаблонОВыдачеИнформацииToolStripMenuItem";
-            this.загрузитьШаблонОВыдачеИнформацииToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.загрузитьШаблонОВыдачеИнформацииToolStripMenuItem.Text = "\"О выдаче информации\"";
-            this.загрузитьШаблонОВыдачеИнформацииToolStripMenuItem.Click += new System.EventHandler(this.загрузитьШаблонОВыдачеИнформацииToolStripMenuItem_Click);
-            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.HeaderText = "Номер";
@@ -615,11 +604,6 @@
             // 
             this.dataGridViewTextBoxColumn2.HeaderText = "Дата";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(241, 6);
             // 
             // Form1
             // 
@@ -643,6 +627,7 @@
             this.Name = "Form1";
             this.Text = "Журнал выданной информации ИОГД";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
@@ -689,7 +674,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripMenuItem вывестиВДокументMSWordToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem выданныеПланшетыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem полученнаяПрибыльToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem переименоватьОрганизациюToolStripMenuItem;
@@ -719,7 +703,6 @@
         private System.Windows.Forms.ToolStripMenuItem сотрудникиИПодписиToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem загрузитьШаблондокументаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem загрузитьШаблонОВыдачеИнформацииToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
     }
 }

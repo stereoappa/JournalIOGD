@@ -19,8 +19,8 @@ namespace LoadOfSql
         public static string ScanDirectory { get; internal set; }
         public static string LastUserDirectory { get; internal set; }
 
-        public static string[] printers;
-        public static readonly string PrintTemplatePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Шаблон формы выдачи информации.docx";
+        //public static string[] printers;
+        //public static readonly string IssueTemplatePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Шаблон формы выдачи информации.docx";
         public static int SelectPrinter;
 
         static RegistryKey key = Registry.CurrentUser;
@@ -65,22 +65,24 @@ namespace LoadOfSql
             regKeyJournal.SetValue("Login", login);
             regKeyJournal.SetValue("Password", pass);
         }
-        public static void SetReadOnlyProp(string path)  //Устанавливаем файлу Атрибут Read Only
-        {
-            FileAttributes attributes = File.GetAttributes(path);
-            if ((attributes & FileAttributes.ReadOnly) != FileAttributes.ReadOnly)
-            {
-                File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.ReadOnly);
-            }
-        }
-        public static void Printers()  //Создает массив принтеров, подключенных к компьютеру
+        //public static void SetReadOnlyProp(string path)  //Устанавливаем файлу Атрибут Read Only
+        //{
+        //    FileAttributes attributes = File.GetAttributes(path);
+        //    if ((attributes & FileAttributes.ReadOnly) != FileAttributes.ReadOnly)
+        //    {
+        //        File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.ReadOnly);
+        //    }
+        //}
+        public static string[] GetPrinters()  //Создает массив принтеров, подключенных к компьютеру
         {
             PrinterSettings.StringCollection sc = PrinterSettings.InstalledPrinters;
-            printers = new string[sc.Count];
+            var printers = new string[sc.Count];
             for (int i = 0; i < sc.Count; i++)
             {
                 printers[i] = sc[i].ToString();
             }
+
+            return printers;
         }
     }
 }

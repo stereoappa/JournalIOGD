@@ -131,18 +131,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\CostFillingModel.cs" />
+    <Compile Include="Domain\SummingType.cs" />
     <Compile Include="Forms\AboutBox1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Enums.cs" />
-    <Compile Include="Domain\Document.cs" />
-    <Compile Include="Domain\DomainExtensions.cs" />
-    <Compile Include="Domain\ClientInfo.cs" />
-    <Compile Include="Domain\IdentityDocType.cs" />
-    <Compile Include="Domain\ScanLink.cs" />
     <Compile Include="Forms\Form13ReportBids.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,6 +156,12 @@
     </Compile>
     <Compile Include="Forms\Form15EmployeesAndSigns.Designer.cs">
       <DependentUpon>Form15EmployeesAndSigns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form16Templates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form16Templates.Designer.cs">
+      <DependentUpon>Form16Templates.cs</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Controls\DataGridViewCalendarColumn.cs" />
     <Compile Include="Forms\Form11RenameOrganization.cs">
@@ -182,8 +184,6 @@
     <Compile Include="Infrastructure\DAL\BlankRowsManager.cs" />
     <Compile Include="Infrastructure\DAL\DataManager.cs" />
     <Compile Include="Infrastructure\Controls\TextBoxTools.cs" />
-    <Compile Include="Domain\CostFillingModel.cs" />
-    <Compile Include="Domain\SummingType.cs" />
     <Compile Include="Forms\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -246,7 +246,7 @@
     </Compile>
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="Infrastructure\DAL\MapCasesManager.cs" />
-    <Compile Include="Infrastructure\PrintingManager.cs" />
+    <Compile Include="Infrastructure\PrintingService.cs" />
     <Compile Include="Infrastructure\SqlQueryBuilder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -278,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Form15EmployeesAndSigns.resx">
       <DependentUpon>Form15EmployeesAndSigns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form16Templates.resx">
+      <DependentUpon>Form16Templates.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
@@ -329,9 +332,6 @@
     <None Include="Resources\add_1353.png" />
     <None Include="Resources\kedit_3845.png" />
     <None Include="Resources\edit_9968.png" />
-    <Content Include="Шаблон формы выдачи информации.docx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

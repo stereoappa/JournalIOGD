@@ -1,4 +1,5 @@
-﻿using LoadOfSql.Domain;
+﻿using DomainModel.Entities;
+using LoadOfSql.Domain;
 using LoadOfSql.Infrastructure.Controls;
 using LoadOfSql.Infrastructure.DAL;
 using System;
