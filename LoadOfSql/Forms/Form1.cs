@@ -53,7 +53,7 @@ namespace LoadOfSql
         Form5SQLQuery sqlForm;
         int currentID;
         List<string> blankRows;
-        bool sqlQueryIsFormed;
+
         IEmployeeService _employeeService;
         IUserService _userService;
         ITemplateService _templateService;
@@ -79,17 +79,11 @@ namespace LoadOfSql
             GlobalSettings.ReadRegistryKeys();
             dm = new DataManager();
             sqlForm = new Form5SQLQuery(new FormResultCallback(sqlFormClosed), baseQuery);
+
+            AuthUser();
         }
 
-        private void SetVersionInHeader()
-        {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            string version = fvi.FileVersion;
-            Text += " " + version;
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
+        private void AuthUser()
         {
             #region Логин
             Employee employee = _userService.TryAuthorizeFromRegister();
@@ -114,9 +108,21 @@ namespace LoadOfSql
                 выданныеПланшетыToolStripMenuItem.Enabled = false;
                 переименоватьОрганизациюToolStripMenuItem.Enabled = false;
                 сотрудникиИПодписиToolStripMenuItem.Enabled = false;
+                редакторШаблоновToolStripMenuItem.Enabled = false;
             }
             #endregion
+        }
 
+        private void SetVersionInHeader()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
+            Text += " " + version;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
             подписьНаДокументахToolStripMenuItem.DropDownItems.Clear();
             Task.Factory.StartNew(GetAllSignsToolStripItems);
 
@@ -536,13 +542,13 @@ namespace LoadOfSql
             {
                 this.toolStripStatusLabel4.ForeColor = System.Drawing.Color.Tomato;
                 toolStripStatusLabel4.Text = "Сформирован";
-                sqlQueryIsFormed = true;
+                //sqlQueryIsFormed = true;
             }
             else
             {
                 this.toolStripStatusLabel4.ForeColor = System.Drawing.Color.Black;
                 toolStripStatusLabel4.Text = "Все записи";
-                sqlQueryIsFormed = false;
+                //sqlQueryIsFormed = false;
             }
 
             dataGridView1.CurrentCellChanged -= dataGridView1_CurrentCellChanged;        //метод get класса Form5SQLQuery Возвращает значение  свойства SqlQueryForForm1            
@@ -603,6 +609,7 @@ namespace LoadOfSql
                 выданныеПланшетыToolStripMenuItem.Enabled = true;
                 переименоватьОрганизациюToolStripMenuItem.Enabled = true;
                 сотрудникиИПодписиToolStripMenuItem.Enabled = true;
+                редакторШаблоновToolStripMenuItem.Enabled = true;
             }
         }
         private void добавитьОрганизациюToolStripMenuItem_Click(object sender, EventArgs e)
@@ -742,9 +749,6 @@ namespace LoadOfSql
             else
                 attensionInfoLabel.Visible = false;
         }
-
-
-
 
 
         #endregion

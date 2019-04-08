@@ -57,7 +57,7 @@ namespace LoadOfSql.Forms
         {
             var cb = sender as ComboBox;
             var type = cb.SelectedItem as TemplateType;
-            var template = _templateRepository.GetActualTemplate(type.TypeId, true);
+            var template = _templateRepository.GetActualTemplate(type.TypeId, false);
 
             templateLoadedInfoLabel.Visible = true;
             if (template != null)
@@ -115,7 +115,57 @@ namespace LoadOfSql.Forms
 
         private void downloadBtn_Click(object sender, EventArgs e)
         {
-           
+            if (templateTypesCB.SelectedItem == null)
+                MessageBox.Show("Шаблон не выбран. Скачивание невозможно.");
+
+            var type = templateTypesCB.SelectedItem as TemplateType;
+            var templateFile = _templateRepository.GetActualTemplate(type.TypeId, true);
+
+            if (templateFile == null)
+                MessageBox.Show("Ошибка скачивания файла");
+
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.ShowNewFolderButton = true;
+            fbd.RootFolder = Environment.SpecialFolder.Desktop;
+            if (fbd.ShowDialog() != DialogResult.OK)
+                return;
+
+            try
+            {
+                var targetPath = Path.Combine(fbd.SelectedPath, templateFile.TemplateType.Name + ".docx");
+                if (File.Exists(targetPath))
+                {
+                    var overwriteRes = MessageBox.Show("Файл с этим именем уже существует. Перезаписать?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (overwriteRes == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            File.Delete(targetPath);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
+                using (FileStream targetFileStream = new FileStream(targetPath, FileMode.CreateNew, FileAccess.ReadWrite))
+                {
+                    targetFileStream.Write(templateFile.FileData, 0, templateFile.FileData.Length);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("При скачивании шаблона возникли ошибки.\r\n" + ex.Message);
+            }
+
+            MessageBox.Show("Файл успешно скопирован", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

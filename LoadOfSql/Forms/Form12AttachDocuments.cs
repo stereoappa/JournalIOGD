@@ -424,7 +424,7 @@ namespace LoadOfSql
         {
             if (dgvDocs.CurrentCell.OwningColumn.Name != "NUM_RAZRESH" && dgvDocs.EditingControl.Text == "/")
             {
-                dgvDocs.EditingControl.Text = "12/";
+                dgvDocs.EditingControl.Text = "14/";
                 var tb = (TextBox)sender;
                 tb.Select(dgvDocs.EditingControl.Text.Length, 0);
             }
@@ -435,7 +435,7 @@ namespace LoadOfSql
             MessageBox.Show("На данной форме есть несколько механизмов для быстрого заполнения данных о документе:\n" +
                                 "- Быстрое заполнение номеров разрешений: в первой ячейке первого столбца вы можете ввести любой диапазон номеров разрешений и нажмите Enter." +
                                 "Например: 115,117,120-125,127.\n\n" +
-                                "- Быстрое заполнение номера обращения, имеющего тип 12/xxx.\nДля этого просто введите в поле ввода номера обращения символ /. \n\n" +
+                                "- Быстрое заполнение номера обращения, имеющего тип 14/xxx.\nДля этого просто введите в поле ввода номера обращения символ /. \n\n" +
                                 "- Растягивание одной даты на все имеющиеся строки. Для этого нажмите правой кнопкой по введенной дате и нажмите Одна дата для всех."
                                 , "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

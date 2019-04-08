@@ -48,7 +48,7 @@
             this.выданныеПланшетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.полученнаяПрибыльToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.загрузитьШаблондокументаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.редакторШаблоновToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сотрудникиИПодписиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -198,7 +198,7 @@
             this.выданныеПланшетыToolStripMenuItem,
             this.полученнаяПрибыльToolStripMenuItem,
             this.toolStripSeparator4,
-            this.загрузитьШаблондокументаToolStripMenuItem,
+            this.редакторШаблоновToolStripMenuItem,
             this.сотрудникиИПодписиToolStripMenuItem,
             this.toolStripSeparator8,
             this.отчетыToolStripMenuItem,
@@ -246,12 +246,12 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(241, 6);
             // 
-            // загрузитьШаблондокументаToolStripMenuItem
+            // редакторШаблоновToolStripMenuItem
             // 
-            this.загрузитьШаблондокументаToolStripMenuItem.Name = "загрузитьШаблондокументаToolStripMenuItem";
-            this.загрузитьШаблондокументаToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
-            this.загрузитьШаблондокументаToolStripMenuItem.Text = "Редактор шаблонов..";
-            this.загрузитьШаблондокументаToolStripMenuItem.Click += new System.EventHandler(this.редакторШаблоновToolStripMenuItem_Click);
+            this.редакторШаблоновToolStripMenuItem.Name = "редакторШаблоновToolStripMenuItem";
+            this.редакторШаблоновToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+            this.редакторШаблоновToolStripMenuItem.Text = "Редактор шаблонов..";
+            this.редакторШаблоновToolStripMenuItem.Click += new System.EventHandler(this.редакторШаблоновToolStripMenuItem_Click);
             // 
             // сотрудникиИПодписиToolStripMenuItem
             // 
@@ -702,7 +702,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem сотрудникиИПодписиToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.ToolStripMenuItem загрузитьШаблондокументаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem редакторШаблоновToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
     }
 }
