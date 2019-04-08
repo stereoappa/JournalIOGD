@@ -28,6 +28,12 @@ namespace ApplicationJournal
         public void LoadActualIssueTemplate()
         {
             var issueTemplate = _templateRepository.GetActualTemplate(TemplateTypeId.InformationIssueTemplate, false);
+            if(issueTemplate == null)
+            {
+                throw new FileNotFoundException("Шаблон о выдаче информации пока не загружен.\r\n\r\n" +
+                    "Загрузите его в редакторе шаблонов: Данные -> Редактор шаблонов");
+            }
+
             string localTemplateMd5 = null;
             if (File.Exists(IssueTemplatePath))
             {

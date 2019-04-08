@@ -155,7 +155,7 @@ namespace LoadOfSql
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошбика обновления шаблонов: {ex.Message}");
+                MessageBox.Show($"{ex.Message}", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
 
@@ -661,7 +661,7 @@ namespace LoadOfSql
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -684,7 +684,7 @@ namespace LoadOfSql
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         #endregion

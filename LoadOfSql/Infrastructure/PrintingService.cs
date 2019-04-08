@@ -117,7 +117,11 @@ namespace LoadOfSql.Infrastructure
         public void Print(int id, DateTime date, List<Document> docs, string orgName,
                                      string clientName, string identityClienName, string cost, string memo, string paymentStatus, string employee, Sign sign, string entryType = "")
         {
-            //GlobalSettings.SetReadOnlyProp(_templateService.IssueTemplatePath);
+            if(!File.Exists(_templateService.IssueTemplatePath))
+            {
+                throw new FileNotFoundException("Шаблон о выдаче информации пока не загружен.\r\n\r\n" +
+                    "Загрузите его в редакторе шаблонов: Данные -> Редактор шаблонов");
+            }
 
             var wordApp = new Word.Application();
             wordApp.Visible = false;
