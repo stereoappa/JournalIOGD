@@ -8,7 +8,7 @@ using DomainModel.Entities;
 
 namespace LoadOfSql
 {
-    static class GlobalSettings
+    public static class GlobalSettings
     {
 #if DEBUG
         public static string ConnectionString => System.Configuration.ConfigurationManager.ConnectionStrings["JournalDBdev"].ConnectionString;

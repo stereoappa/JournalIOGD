@@ -10,6 +10,30 @@ namespace LoadOfSql.Infrastructure
 {
     static class SqlQueryBuilder
     {
+        public static string AllRecordsQuery =>
+                                          @"SELECT Журнал.ID AS Номер, 
+                                            ТипДокумента.Name AS Документ, 
+                                            Журнал.Date AS Дата,
+                                            Организации.Название As Организация, 
+                                            Сотрудники.Фамилия AS Выдал,                                            
+                                            Клиенты.ClientName,                                          
+                                            Memo, 
+                                            Info_type.in_type,
+                                            Cost, 
+                                            MapCasesCount, 
+                                            RequireConfirmAct,
+                                            Журнал.Client_ID
+                                      FROM Журнал 
+                                            LEFT JOIN Организации ON Журнал.Organ_ID = Организации.ID
+                                            LEFT JOIN ТипДокумента ON Журнал.TypeDoc = ТипДокумента.ID
+                                            LEFT JOIN Сотрудники ON Журнал.Empl_ID = Сотрудники.ID
+                                            LEFT JOIN Клиенты ON Журнал.Client_ID = Клиенты.ID
+                                            LEFT JOIN Info_type ON Журнал.in_id = Info_type.ID
+                                      ORDER BY Журнал.ID";
+
+
+        public static string AllDocumentsQuery => @"SELECT [ID_DOCUMENT],[FID_JOURNAL],[FID_TYPE_DOC],[NUM_RAZRESH],[DATE_RAZRESH],[TICKET_NUMBER],[TICKET_DATE],[CHARGE_DATE] FROM DOCUMENTS";
+
         public static SqlCommand SumByDateQuery(SummingType type, DateTime from, DateTime by, SqlConnection connect)
         {
             string sqlFrom = from.ToString("yyyy-MM-dd");
@@ -171,8 +195,8 @@ namespace LoadOfSql.Infrastructure
             return new SqlCommand(@"INSERT INTO Клиенты  (ClientName, Org_ID, FID_DOCTYPE, REQUISITES, SCAN_LINK) 
                                     VALUES (" + clientName.BeQuoted() + ","
                                     + orgId + "," +
-                                    fidDoctype + "," +                                   
-                                    requisites.BeQuoted()+ "," + 
+                                    fidDoctype + "," +
+                                    requisites.BeQuoted() + "," +
                                     scanLink.BeQuotedFromNullVariation() + ")"
                                     , cn);
         }

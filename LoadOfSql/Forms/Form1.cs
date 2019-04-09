@@ -26,28 +26,8 @@ namespace LoadOfSql
     public delegate void FormResultCallback(DialogResult dr);
     public partial class Form1 : Form
     {
-        readonly string baseQuery = @"SELECT Журнал.ID AS Номер, 
-                                            ТипДокумента.Name AS Документ, 
-                                            Журнал.Date AS Дата,
-                                            Организации.Название As Организация, 
-                                            Сотрудники.Фамилия AS Выдал,                                            
-                                            Клиенты.ClientName,                                          
-                                            Memo, 
-                                            Info_type.in_type,
-                                            Cost, 
-                                            MapCasesCount, 
-                                            RequireConfirmAct,
-                                            Журнал.Client_ID
-                                      FROM Журнал 
-                                            LEFT JOIN Организации ON Журнал.Organ_ID = Организации.ID
-                                            LEFT JOIN ТипДокумента ON Журнал.TypeDoc = ТипДокумента.ID
-                                            LEFT JOIN Сотрудники ON Журнал.Empl_ID = Сотрудники.ID
-                                            LEFT JOIN Клиенты ON Журнал.Client_ID = Клиенты.ID
-                                            LEFT JOIN Info_type ON Журнал.in_id = Info_type.ID
-                                      ORDER BY Журнал.ID";
-        readonly string docQuery = @"SELECT [ID_DOCUMENT],[FID_JOURNAL],[FID_TYPE_DOC],[NUM_RAZRESH],[DATE_RAZRESH],[TICKET_NUMBER],[TICKET_DATE],[CHARGE_DATE] FROM DOCUMENTS";
+        //readonly string docQuery = SqlQueryBuilder.AllDocumentsQuery;
         List<string> clmnNames;
-
         DataManager dm;
         DataTable mainTable, docTable;
         Form5SQLQuery sqlForm;
@@ -78,7 +58,7 @@ namespace LoadOfSql
 
             GlobalSettings.ReadRegistryKeys();
             dm = new DataManager();
-            sqlForm = new Form5SQLQuery(new FormResultCallback(sqlFormClosed), baseQuery);
+            sqlForm = new Form5SQLQuery(new FormResultCallback(sqlFormClosed), SqlQueryBuilder.AllRecordsQuery);
 
             AuthUser();
         }
@@ -116,9 +96,9 @@ namespace LoadOfSql
         private void SetVersionInHeader()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            string version = fvi.FileVersion;
-            Text += " " + version;
+            Version version = assembly.GetName().Version;
+
+            Text += " " + $"{version.Major}.{version.Minor}.{version.Build}";
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -131,7 +111,7 @@ namespace LoadOfSql
 
             dataGridView1.DataSource = bindingSource1;
 
-            LoadTables(sqlForm.CurrentSqlQuery, docQuery);
+            LoadTables(sqlForm.CurrentSqlQuery, SqlQueryBuilder.AllDocumentsQuery);
             SaveColumnNames();
 
             dataGridView1.CurrentCellChanged += dataGridView1_CurrentCellChanged;
@@ -523,7 +503,7 @@ namespace LoadOfSql
                     DataRow rowToDelete = (dataGridView1.CurrentRow.DataBoundItem as DataRowView).Row;
                     RowEdit.DeleteRow(rowToDelete);
                     rowToDelete.Delete();
-                    LoadTables(sqlForm.CurrentSqlQuery, docQuery);
+                    LoadTables(sqlForm.CurrentSqlQuery, SqlQueryBuilder.AllDocumentsQuery);
                 }
             }
         }
@@ -552,7 +532,7 @@ namespace LoadOfSql
             }
 
             dataGridView1.CurrentCellChanged -= dataGridView1_CurrentCellChanged;        //метод get класса Form5SQLQuery Возвращает значение  свойства SqlQueryForForm1            
-            LoadTables(sqlForm.CurrentSqlQuery, docQuery);
+            LoadTables(sqlForm.CurrentSqlQuery, SqlQueryBuilder.AllDocumentsQuery);
             GoLustNumber();
             dataGridView1.CurrentCellChanged += dataGridView1_CurrentCellChanged;        //Вызваем из Form1 метод GetData с новой строкой запроса
 
@@ -629,7 +609,7 @@ namespace LoadOfSql
                 try
                 {
                     dataGridView1.CurrentCellChanged -= dataGridView1_CurrentCellChanged;
-                    LoadTables(sqlForm.CurrentSqlQuery, docQuery);
+                    LoadTables(sqlForm.CurrentSqlQuery, SqlQueryBuilder.AllDocumentsQuery);
                     LabelFiling();
                     dataGridView1.CurrentCellChanged += dataGridView1_CurrentCellChanged;
                 }
@@ -726,7 +706,7 @@ namespace LoadOfSql
         {
             int underRefreshPosDGV = dataGridView1.FirstDisplayedScrollingRowIndex;
 
-            LoadTables(sqlForm.CurrentSqlQuery, docQuery);
+            LoadTables(sqlForm.CurrentSqlQuery, SqlQueryBuilder.AllDocumentsQuery);
             if (underRefreshPosDGV != -1)
                 dataGridView1.FirstDisplayedScrollingRowIndex = underRefreshPosDGV;
 
