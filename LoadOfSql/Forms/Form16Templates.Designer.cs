@@ -104,7 +104,7 @@
             this.MinimizeBox = false;
             this.Name = "Form16Templates";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Шаблоны на печать";
+            this.Text = "Редактор шаблонов";
             this.Load += new System.EventHandler(this.Form16Templates_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
