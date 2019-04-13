@@ -25,7 +25,7 @@ namespace ApplicationJournal
         public string IssueTemplatePath { get; }
                    
 
-        public void LoadActualIssueTemplate()
+        public TemplateLoadStatus LoadActualIssueTemplate()
         {
             var issueTemplate = _templateRepository.GetActualTemplate(TemplateTypeId.InformationIssueTemplate, false);
             if(issueTemplate == null)
@@ -44,7 +44,10 @@ namespace ApplicationJournal
             {
                 issueTemplate = _templateRepository.GetActualTemplate(TemplateTypeId.InformationIssueTemplate, true);
                 ByteArrayToFile(IssueTemplatePath, issueTemplate.FileData);
+                return TemplateLoadStatus.Updated;
             }
+
+            return TemplateLoadStatus.AlreadyLoaded;
         }
 
         public bool ByteArrayToFile(string fileName, byte[] byteArray)
@@ -70,6 +73,6 @@ namespace ApplicationJournal
         string IssueTemplatePath { get; }
         List<TemplateType> AvailableTemplates { get; }
 
-        void LoadActualIssueTemplate();
+        TemplateLoadStatus LoadActualIssueTemplate();
     }
 }

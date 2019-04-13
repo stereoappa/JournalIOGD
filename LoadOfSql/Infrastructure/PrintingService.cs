@@ -18,7 +18,7 @@ namespace LoadOfSql.Infrastructure
 {
     public interface IPrintingService
     {
-        string CreateEmptyTemplateFile(TemplateTypeId templateTypeId);
+        string CreateTempTemplateFile(TemplateTypeId templateTypeId);
 
         void Print(int id, DateTime date, List<Document> docs, string orgName,
                                      string clientName, string identityClienName, string cost, string memo, string paymentStatus, string employee, Sign sign, string entryType = "");
@@ -38,13 +38,8 @@ namespace LoadOfSql.Infrastructure
         }
 
 
-        public string CreateEmptyTemplateFile(TemplateTypeId templateTypeId)
+        public string CreateTempTemplateFile(TemplateTypeId templateTypeId)
         {
-            if (!File.Exists(_templateService.IssueTemplatePath))
-            {
-                _templateService.LoadActualIssueTemplate();
-            }
-
             var _tempFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "_Temp");
             if (!Directory.Exists(_tempFolder))
                 Directory.CreateDirectory(_tempFolder);
@@ -117,11 +112,7 @@ namespace LoadOfSql.Infrastructure
         public void Print(int id, DateTime date, List<Document> docs, string orgName,
                                      string clientName, string identityClienName, string cost, string memo, string paymentStatus, string employee, Sign sign, string entryType = "")
         {
-            if(!File.Exists(_templateService.IssueTemplatePath))
-            {
-                throw new FileNotFoundException("Шаблон о выдаче информации пока не загружен.\r\n\r\n" +
-                    "Загрузите его в редакторе шаблонов: Данные -> Редактор шаблонов");
-            }
+            _templateService.LoadActualIssueTemplate();
 
             var wordApp = new Word.Application();
             wordApp.Visible = false;
@@ -150,11 +141,18 @@ namespace LoadOfSql.Infrastructure
         public void ExportToWord(int id, DateTime date, List<Document> docs, string orgName,
                                      string clientName, string identityClientName, string cost, string memo, string paymentStatus, string employee, Sign sign, string entryType = "")
         {
-            var tempWordFile = CreateEmptyTemplateFile(TemplateTypeId.InformationIssueTemplate);
+            string tempWordFile;
+            try
+            {
+                _templateService.LoadActualIssueTemplate();
+                tempWordFile = CreateTempTemplateFile(TemplateTypeId.InformationIssueTemplate);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Не удалось создать временный файл для вывода в Word.\r\nЗавершите все WORD-процессы через диспетчер задач и попробуйте снова\r\n\r\n" + ex.Message);
+            }
 
             var wordApp = new Word.Application();
-            //GlobalSettings.SetReadOnlyProp(templatePath);
-
             wordApp.Visible = false;
             try
             {

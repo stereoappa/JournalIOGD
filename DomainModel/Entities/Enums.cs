@@ -11,4 +11,17 @@ namespace DomainModel.Entities
         Ticket = 2,
         Not = 3
     }
+
+    public enum TemplateLoadStatus
+    {
+        /// <summary>
+        /// Актуальный шаблон уже загружен клиентом ранее
+        /// </summary>
+        AlreadyLoaded,
+
+        /// <summary>
+        /// Шаблон был обновлен
+        /// </summary>
+        Updated
+    }
 }

@@ -47,7 +47,7 @@ namespace LoadOfSql
             IPrintingService printingService)
         {
             InitializeComponent();
-            SetVersionInHeader();
+            SetVersionInFormTitle();
 
             _userService = userService;
             _employeeService = employeeService;
@@ -58,42 +58,10 @@ namespace LoadOfSql
 
             GlobalSettings.ReadRegistryKeys();
             dm = new DataManager();
-            sqlForm = new Form5SQLQuery(new FormResultCallback(sqlFormClosed), SqlQueryBuilder.AllRecordsQuery);
-
-            AuthUser();
+            sqlForm = new Form5SQLQuery(new FormResultCallback(sqlFormClosed), SqlQueryBuilder.AllRecordsQuery);   
         }
 
-        private void AuthUser()
-        {
-            #region Логин
-            Employee employee = _userService.TryAuthorizeFromRegister();
-            if (employee == null)
-                employee = GetEmployeeByLoginAndPassword();
-
-            GlobalSettings.LoginUser = employee;
-
-            if (GlobalSettings.LoginUser != null)
-            {
-                this.toolStripStatusLabel1.ForeColor = System.Drawing.Color.Black;
-                toolStripStatusLabel1.Text = "Вход выполнен: " + (string.IsNullOrWhiteSpace(GlobalSettings.LoginUser.ShortName) ? GlobalSettings.LoginUser.SecondName : GlobalSettings.LoginUser.ShortName);
-            }
-            else
-            {
-                toolStripStatusLabel1.Text = "Вход не выполнен, пожалуйста авторизируйтесь.";
-                this.toolStripStatusLabel1.ForeColor = System.Drawing.Color.Tomato;
-                BtnCreateItem.Enabled = false;
-                contextMenuStrip1.Items[3].Enabled = false;
-                contextMenuStrip1.Items[4].Enabled = false;
-                добавитьОрганизациюToolStripMenuItem.Enabled = false;
-                выданныеПланшетыToolStripMenuItem.Enabled = false;
-                переименоватьОрганизациюToolStripMenuItem.Enabled = false;
-                сотрудникиИПодписиToolStripMenuItem.Enabled = false;
-                редакторШаблоновToolStripMenuItem.Enabled = false;
-            }
-            #endregion
-        }
-
-        private void SetVersionInHeader()
+        private void SetVersionInFormTitle()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             Version version = assembly.GetName().Version;
@@ -103,6 +71,8 @@ namespace LoadOfSql
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            AuthentificateUser();
+
             подписьНаДокументахToolStripMenuItem.DropDownItems.Clear();
             Task.Factory.StartNew(GetAllSignsToolStripItems);
 
@@ -129,20 +99,43 @@ namespace LoadOfSql
             #endregion
 
             GoLustNumber();
-            try
-            {
-                _templateService.LoadActualIssueTemplate();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{ex.Message}", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-
 
             dataGridView1.SortedOff();
         }
 
-        Employee GetEmployeeByLoginAndPassword()
+        #region Аутентификация пользователя / Вход
+        private bool AuthentificateUser()
+        {
+            Employee employee = _userService.TryAuthorizeFromRegister();
+            if (employee == null)
+                employee = ShowLoginForm();
+
+            GlobalSettings.LoginUser = employee;
+
+            if (GlobalSettings.LoginUser != null)
+            {
+                this.toolStripStatusLabel1.ForeColor = System.Drawing.Color.Black;
+                toolStripStatusLabel1.Text = "Вход выполнен: " + (string.IsNullOrWhiteSpace(GlobalSettings.LoginUser.ShortName) ? GlobalSettings.LoginUser.SecondName : GlobalSettings.LoginUser.ShortName);
+                return true;
+            }
+            else
+            {
+                toolStripStatusLabel1.Text = "Вход не выполнен, пожалуйста авторизируйтесь.";
+                this.toolStripStatusLabel1.ForeColor = System.Drawing.Color.Tomato;
+                BtnCreateItem.Enabled = false;
+                contextMenuStrip1.Items[3].Enabled = false;
+                contextMenuStrip1.Items[4].Enabled = false;
+                добавитьОрганизациюToolStripMenuItem.Enabled = false;
+                выданныеПланшетыToolStripMenuItem.Enabled = false;
+                переименоватьОрганизациюToolStripMenuItem.Enabled = false;
+                сотрудникиИПодписиToolStripMenuItem.Enabled = false;
+                редакторШаблоновToolStripMenuItem.Enabled = false;
+
+                return false;
+            }
+        }
+
+        Employee ShowLoginForm()
         {
             Employee employee = null;
             Form7UserLogin userLogin = new Form7UserLogin(_userService, e => employee = e);
@@ -150,6 +143,7 @@ namespace LoadOfSql
 
             return employee;
         }
+        #endregion
 
         #region Подписи на документах
         private void GetAllSignsToolStripItems()
@@ -397,7 +391,7 @@ namespace LoadOfSql
             }
         }
 
-        #region====================Перейти по номеру=======================
+        #region Перейти по номеру
         private void goToNumberBtn_Click(object sender, EventArgs e)
         {
             if ((textBox2.Visible == true) && ((textBox2.Text == null) || (textBox2.Text == "")))
@@ -463,7 +457,7 @@ namespace LoadOfSql
         }
         #endregion
 
-        #region ============== Контекстное меню dataGridView ================
+        #region Контекстное меню dataGridView
         private void dataGridView1_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)     //выпадание контекстного меню
         {
             if (e.ColumnIndex < dataGridView1.ColumnCount && e.ColumnIndex >= 0 && e.RowIndex < dataGridView1.RowCount && e.RowIndex >= 0)
@@ -510,7 +504,7 @@ namespace LoadOfSql
 
         #endregion
 
-        #region====================ЗАПРОС======================
+        #region ЗАПРОС
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -540,7 +534,7 @@ namespace LoadOfSql
         }
         #endregion
 
-        #region ======================МЕНЮ=========================
+        #region МЕНЮ
         private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form6Settings f6 = new Form6Settings();
@@ -621,7 +615,7 @@ namespace LoadOfSql
         }
         #endregion
 
-        #region==========ВЫВЕСТИ В WORD И НА ПЕЧАТЬ===============
+        #region ВЫВЕСТИ В WORD И НА ПЕЧАТЬ
         private void ВдокументMSWordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -694,7 +688,7 @@ namespace LoadOfSql
         }
 
 
-        #region ===========ОТЧЕТЫ=============
+        #region ОТЧЕТЫ
         private void книгаУчетаЗаявкиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form13ReportBids bidsForm = new Form13ReportBids();
@@ -712,7 +706,11 @@ namespace LoadOfSql
 
             try
             {
-                _templateService.LoadActualIssueTemplate();
+                var loadStatus = _templateService.LoadActualIssueTemplate();
+                if (loadStatus == TemplateLoadStatus.Updated)
+                {
+                    MessageBox.Show("Шаблон выдачи информации был успешно обновлен на вашем компьютере.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             catch (Exception ex)
             {
